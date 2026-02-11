@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shopping TODO List</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Shopping TODO List (shared JSON)</h1>
+      <p class="json-link">JSON público: <a href="/api/tasks" target="_blank" rel="noreferrer">/api/tasks</a></p>
+
+      <div class="row">
+        <div class="col d-col w-100">
+          <form action="/tasks" method="post" class="task-form">
+            <label for="owner">Usuario</label>
+            <select id="owner" name="owner" class="form-control">
+              <% users.forEach(function(user) { %>
+                <option value="<%= user %>" <%= selectedUser === user ? 'selected' : '' %>><%= user %></option>
+              <% }) %>
+            </select>
+
+            <label for="title">Producto</label>
+            <input id="title" type="text" class="form-control" name="title" minlength="3" placeholder="Ej: Arroz" required>
+            <button class="btn btn-primary">Agregar</button>
+          </form>
+
+          <% if (typeof query !== 'undefined' && query.error === 'invalid') { %>
+            <div class="alert">
+              <p class="invalid-text">El texto debe contener al menos 3 caracteres y un usuario válido.</p>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col d-col">
+          <h2>Lista de <%= selectedUser %></h2>
+          <div class="list-group">
+            <% const filteredTasks = tasks.filter(function(task){ return task.owner === selectedUser; }); %>
+            <% if (!filteredTasks.length) { %>
+              <div class="list-group-item empty">No hay productos para este usuario.</div>
+            <% } %>
+            <% filteredTasks.forEach(function(task) { %>
+              <div class="list-group-item">
+                <form action="/tasks/<%= task.id %>/toggle?user=<%= selectedUser %>" method="post">
+                  <button class="btn"><%= task.done ? 'Desmarcar' : 'Comprar' %></button>
+                </form>
+                <p class="task-title <%= task.done ? 'done' : '' %>"><%= task.title %></p>
+                <form action="/tasks/<%= task.id %>/delete?user=<%= selectedUser %>" method="POST">
+                  <button class="btn item-delete">Borrar</button>
+                </form>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+
+        <div class="col d-col">
+          <h2>Vista global (todos)</h2>
+          <div class="list-group">
+            <% if (!tasks.length) { %>
+              <div class="list-group-item empty">No hay productos guardados.</div>
+            <% } %>
+            <% tasks.forEach(function(task) { %>
+              <div class="list-group-item">
+                <p class="task-title <%= task.done ? 'done' : '' %>"><%= task.title %></p>
+                <span class="badge"><%= task.owner %></span>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

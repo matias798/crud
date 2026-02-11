@@ -1,0 +1,22 @@
+{
+  "users": [
+    "matias",
+    "agus"
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Leche",
+      "owner": "matias",
+      "done": false,
+      "createdAt": "2026-02-11T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "title": "Pan",
+      "owner": "agus",
+      "done": false,
+      "createdAt": "2026-02-11T00:00:00.000Z"
+    }
+  ]
+}
