@@ -1,0 +1,17 @@
+{
+  "criteria": {
+    "household_size": 2,
+    "max_rent_dkk": 13000,
+    "min_size_m2": 40.0,
+    "preferred_areas": [
+      "bronshoj",
+      "brønshøj",
+      "glostrup",
+      "hoje-taastrup",
+      "høje-taastrup",
+      "nordvest"
+    ],
+    "max_commute_to_kbh_h_min": 30
+  },
+  "listings": []
+}
